@@ -1,0 +1,8 @@
+/* line 2, ../../../src/scss/contentfilter.scss */
+.content-filter .selected-region label {
+  display: inline;
+}
+/* line 5, ../../../src/scss/contentfilter.scss */
+.content-filter .controls {
+  margin-top: 1rem;
+}
