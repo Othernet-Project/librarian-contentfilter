@@ -3,10 +3,10 @@
 <%namespace name="languages" file="_languages.tpl"/>
 
 <div class="content-filter">
-    % if region:
-        ${languages.body()}
-    % else:
+    % if not region:
         ${regions.body()}
+    % else:
+        ${languages.body()}
     % endif
 </div>
 
