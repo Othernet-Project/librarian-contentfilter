@@ -1,44 +1,49 @@
 ((window, $, templates) ->
-  loadErrorMessage = templates.filterLoadError
-  saveErrorMessage = templates.filterSaveError
-  formSelector = '#content-filter-form'
-  changeRegionSelector = '#change-region'
-  form = null
-  url = null
+  errorMessage = templates.filterError
+  container = $ '.content-filter'
+  regionFormSelector = '#content-filter-region-form'
+  languagesFormSelector = '#content-filter-languages-form'
+  regionForm = null
+  languagesForm = null
 
-  changeRegion = (e) ->
-    e.preventDefault()
-    el = $ @
-    regionsUrl = el.attr 'href'
-    res = $.get regionsUrl
-    res.done (data) ->
-      # removes all event handlers automatically
-      form.replaceWith data
-      bindForm()
-    res.fail () ->
-      form.prepend loadErrorMessage
+  resizeSection = (form) ->
+    form.parents('section').trigger('remax')
 
-  submitData = (data) ->
-    res = $.post url, data
-    res.done (data) ->
+  submitForm = (form) ->
+    method = form.attr 'method'
+    url = form.attr 'action'
+    data = form.serialize()
+    res = $.ajax({url: url, data: data, type: method})
+    res.done (result) ->
       # removes all event handlers automatically
-      form.replaceWith data
-      bindForm()
-    res.fail () ->
-      form.prepend saveErrorMessage
+      container.html result
+      bindForms()
+    res.fail (xhr) ->
+      form.prepend errorMessage
+      resizeSection(form)
 
   onSubmit = (e) ->
     e.preventDefault()
-    data = form.serialize()
-    submitData data
+    form = $ @
+    submitForm form
 
-  bindForm = () ->
-    form = $ formSelector
-    url = form.attr 'action'
-    form.on 'submit', onSubmit
-    form.parents('section').trigger('remax')
-    $(changeRegionSelector).on 'click', changeRegion
+  onSelect = (e) ->
+    e.preventDefault()
+    select = $ @
+    form = select.parents('form')
+    submitForm form
 
-  bindForm()
+  bindForms = () ->
+    languagesForm = $ languagesFormSelector
+    languagesForm.on 'submit', onSubmit
+    regionForm = $ regionFormSelector
+    regionButton = regionForm.find 'button'
+    regionSelect = regionForm.find 'select'
+    regionButton.hide()
+    regionSelect.on 'change', onSelect
+    regionForm.parents('section').trigger('remax')
+    resizeSection(regionForm)
+
+  bindForms()
 
 ) this, this.jQuery, this.templates

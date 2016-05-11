@@ -1,11 +1,6 @@
 <%namespace name="forms" file="/ui/forms.tpl"/>
 
-${h.form('post', action=i18n_url('contentfilter:languages'), id='content-filter-form')}
-    <p class="selected-region">
-        ## Translators, message shows which region was selected previously,
-        ## and the below listed languages belong to this specific region
-        <span>${_("Available languages for:")}</span>&nbsp;<label>${region}</label>
-    </p>
+${h.form('post', action=i18n_url('contentfilter:languages'), id='content-filter-languages-form')}
     ${forms.form_message(message)}
     ${forms.hidden('region', h.urlquote(region))}
     <ul>
@@ -14,7 +9,6 @@ ${h.form('post', action=i18n_url('contentfilter:languages'), id='content-filter-
     % endfor
     </ul>
     <p class="controls">
-        <button type="submit">${_("Save")}</button>
-        <a id="change-region" class="button" href="${i18n_url('contentfilter:regions')}">${_("Change Region")}</a>
+        <button type="submit">${_("Save settings")}</button>
     </p>
-<form>
+</form>

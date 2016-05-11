@@ -1,24 +1,13 @@
 <%namespace name="forms" file="/ui/forms.tpl"/>
-<%namespace name="regions" file="_regions.tpl"/>
-<%namespace name="languages" file="_languages.tpl"/>
+<%namespace name="settings" file="_settings.tpl"/>
 
 <div class="content-filter">
-    % if not region:
-        ${regions.body()}
-    % else:
-        ${languages.body()}
-    % endif
+    ${settings.body()}
 </div>
 
-<script type="text/template" id="filterLoadError">
+<script type="text/template" id="filterError">
     <% 
-    errors = [_('Region list could not be fetched due to application error.')]
-    %>
-    ${forms.form_errors(errors)}
-</script>
-<script type="text/template" id="filterSaveError">
-    <% 
-    errors = [_('Filter settings could not be saved due to application error.')]
+    errors = [_('Operation could not be completed due to application error.')]
     %>
     ${forms.form_errors(errors)}
 </script>
