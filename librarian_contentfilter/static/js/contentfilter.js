@@ -47,6 +47,7 @@
     languagesForm = $(languagesFormSelector);
     languagesForm.on('submit', onSubmit);
     regionForm = $(regionFormSelector);
+    regionForm.find('o-field').removeClass('inline-field');
     regionButton = regionForm.find('button');
     regionSelect = regionForm.find('select');
     regionButton.hide();

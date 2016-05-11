@@ -1,6 +1,6 @@
 /* line 2, ../../../src/scss/contentfilter.scss */
-.content-filter .selected-region label {
-  display: inline;
+.content-filter .inline-field {
+  display: inline-block;
 }
 /* line 5, ../../../src/scss/contentfilter.scss */
 .content-filter .controls {
