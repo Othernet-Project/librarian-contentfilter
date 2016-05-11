@@ -3,6 +3,7 @@
   container = $ '.content-filter'
   regionFormSelector = '#content-filter-region-form'
   languagesFormSelector = '#content-filter-languages-form'
+  fieldSelector = '.o-field'
   regionForm = null
   languagesForm = null
 
@@ -34,15 +35,18 @@
     submitForm form
 
   bindForms = () ->
+    # intercept form submission through save button
     languagesForm = $ languagesFormSelector
     languagesForm.on 'submit', onSubmit
+    # hide change button and make field use full width
     regionForm = $ regionFormSelector
-    regionForm.find('o-field').removeClass('inline-field')
+    regionForm.find(fieldSelector).removeClass('inline-field')
     regionButton = regionForm.find 'button'
-    regionSelect = regionForm.find 'select'
     regionButton.hide()
+    # bind select element's onchange event to submit automatically
+    regionSelect = regionForm.find 'select'
     regionSelect.on 'change', onSelect
-    regionForm.parents('section').trigger('remax')
+    # responses differ in height, so a resize of the section is triggered
     resizeSection(regionForm)
 
   bindForms()
