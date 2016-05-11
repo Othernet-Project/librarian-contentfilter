@@ -13,14 +13,11 @@ from .helpers import get_languages_of, get_saved_filters, set_fsal_whitelist
 @roca_view('contentfilter/regions',
            'contentfilter/_regions',
            template_func=template)
-def regions_handler():
-    (region, languages) = get_saved_filters(request.app.config)
-    region_languages = get_languages_of(region, request.app.config)
+def regions_handler(form=None):
+    (region, _) = get_saved_filters(request.app.config)
     form_cls = get_region_form(request.app.config)
-    return dict(form=form_cls(dict(region=region)),
-                region=region,
-                region_languages=region_languages,
-                selected_languages=languages)
+    form = form_cls(dict(region=region)) if form is None else form
+    return dict(form=form, region=region)
 
 
 @roca_view('contentfilter/languages',
@@ -31,7 +28,7 @@ def languages_handler():
     form_cls = get_region_form(request.app.config)
     form = form_cls(request.params)
     if not form.is_valid():
-        redirect(i18n_url('regions:list'))
+        return regions_handler(form=form)
     # get list of languages for selected region
     region = form.processed_data['region']
     region_languages = get_languages_of(region, request.app.config)
