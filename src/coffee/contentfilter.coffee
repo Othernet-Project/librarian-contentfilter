@@ -3,7 +3,6 @@
   container = $ '.content-filter'
   regionFormSelector = '#content-filter-region-form'
   languagesFormSelector = '#content-filter-languages-form'
-  fieldSelector = '.o-field'
   regionForm = null
   languagesForm = null
 
@@ -38,9 +37,8 @@
     # intercept form submission through save button
     languagesForm = $ languagesFormSelector
     languagesForm.on 'submit', onSubmit
-    # hide change button and make field use full width
+    # hide change button
     regionForm = $ regionFormSelector
-    regionForm.find(fieldSelector).removeClass('inline-field')
     regionButton = regionForm.find 'button'
     regionButton.hide()
     # bind select element's onchange event to submit automatically
